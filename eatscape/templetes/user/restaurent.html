@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eatscape - Restaurants</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://wallpapersmug.com/download/3840x2160/ddcbbf/food-pizza-baking.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Section */
+        header {
+            background: linear-gradient(to right, rgba(255, 77, 77, 0.9), rgba(255, 204, 128, 0.9));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        /* Logout Button Styling */
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: inline-block;
+            background: #ff4d4d;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .logout-button:hover {
+            background: #e63939;
+            transform: scale(1.05);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Restaurant List */
+        .restaurant-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Restaurant Card */
+        .restaurant-card {
+            display: flex;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .restaurant-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Restaurant Image */
+        .restaurant-image {
+            width: 220px;
+            height: auto;
+            object-fit: cover;
+            border-right: 5px solid #ff4d4d;
+        }
+
+        /* Restaurant Details */
+        .restaurant-details {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .restaurant-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff4d4d;
+            margin-bottom: 10px;
+        }
+
+        .restaurant-rating {
+            color: #ffcc00;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .restaurant-description {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 20px;
+            background: rgba(241, 241, 241, 0.9);
+            font-size: 0.9rem;
+            color: #555;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Eatscape</h1>
+        <p>Discover the best restaurants and cuisine near you</p>
+        <a href="{% url 'login' %}" class="logout-button">Logout</a>
+    </header>
+    <div class="container">
+        <div class="restaurant-list">
+            <!-- Restaurant Card Example -->
+            {% if details_new %}
+            <div class="col-12 border mb-3">
+                {% for item in details_new %}
+                <div class="restaurant-card">
+                    {% if item.image %}
+                    <img class="restaurant-image" src="{{ item.image.url }}" alt="Restaurant 3">
+                    {% endif %}
+                    <div class="restaurant-details">
+                        <a class="nav-link" href="{% url 'menu_home' item.id %}">
+                            <div class="restaurant-name">{{ item.id }} {{ item.restaurantName }}</div>
+                        </a>
+                        <div class="restaurant-rating">⭐⭐⭐⭐⭐ (4.9)</div>
+                        <div class="restaurant-description">
+                            {{ item.address }}
+                            {{ item.contact }}.
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 Eatscape. All rights reserved. | Made with ❤️
+    </footer>
+</body>
+
+</html>
