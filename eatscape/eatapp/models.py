@@ -47,6 +47,7 @@ class payment(models.Model):
     paymentOption=models.TextField()
     cardNumber=models.IntegerField()
     cardholderName=models.TextField()
+    
 
 
     def __str__(self):

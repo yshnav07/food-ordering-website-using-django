@@ -146,7 +146,7 @@ def update_rest(request):
             'details':details
         }
    
-    return render (request,'restaurant/update_menu.html',context)
+    return render (request,'restaurant/update_rest.html',context)
 
 def cart(request):
     
