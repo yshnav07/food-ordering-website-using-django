@@ -34,6 +34,7 @@
         header h1 {
             margin: 0;
             font-size: 2.5rem;
+            color: black;
         }
 
         header p {
@@ -42,29 +43,61 @@
             font-weight: 300;
         }
 
-        /* Logout Button Styling */
-        .logout-button {
+        /* Navbar Dropdown */
+        .navbar {
             position: absolute;
             top: 20px;
             right: 20px;
+        }
+
+        .dropdown {
+            position: relative;
             display: inline-block;
+        }
+
+        .dropbtn {
             background: #ff4d4d;
             color: white;
             font-size: 1rem;
             font-weight: bold;
             padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
             border: none;
             border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: background 0.3s, transform 0.2s;
         }
 
-        .logout-button:hover {
+        .dropbtn:hover {
             background: #e63939;
             transform: scale(1.05);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: white;
+            min-width: 150px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            font-size: 1rem;
+        }
+
+        .dropdown-content a:hover {
+            background: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
 
         /* Main Container */
@@ -98,14 +131,14 @@
 
         /* Restaurant Image */
         .restaurant-image {
-            width: 220px;
-            height: auto;
+            width: 300px;
+            height: 200px;
             object-fit: cover;
-            border-right: 5px solid #ff4d4d;
         }
 
         /* Restaurant Details */
         .restaurant-details {
+            flex: 1;
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -122,7 +155,7 @@
         .restaurant-rating {
             color: #ffcc00;
             font-size: 1.2rem;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .restaurant-description {
@@ -148,31 +181,38 @@
     <header>
         <h1>Welcome to Eatscape</h1>
         <p>Discover the best restaurants and cuisine near you</p>
-        <a href="{% url 'login' %}" class="logout-button">Logout</a>
+        <p>Welcome {{ user.username }}!</p>
+        <div class="navbar">
+            <div class="dropdown">
+                <button class="dropbtn">Settings</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'update_login' %}">Update Password</a>
+                    <a href="{% url 'login' %}">Logout</a>
+                </div>
+            </div>
+        </div>
     </header>
     <div class="container">
         <div class="restaurant-list">
             <!-- Restaurant Card Example -->
             {% if details_new %}
-            <div class="col-12 border mb-3">
-                {% for item in details_new %}
-                <div class="restaurant-card">
-                    {% if item.image %}
-                    <img class="restaurant-image" src="{{ item.image.url }}" alt="Restaurant 3">
-                    {% endif %}
-                    <div class="restaurant-details">
-                        <a class="nav-link" href="{% url 'menu_home' item.id %}">
-                            <div class="restaurant-name">{{ item.id }} {{ item.restaurantName }}</div>
-                        </a>
-                        <div class="restaurant-rating">⭐⭐⭐⭐⭐ (4.9)</div>
-                        <div class="restaurant-description">
-                            {{ item.address }}
-                            {{ item.contact }}.
-                        </div>
+            {% for item in details_new %}
+            <div class="restaurant-card">
+                {% if item.image %}
+                <img class="restaurant-image" src="{{ item.image.url }}" alt="{{ item.restaurantName }}">
+                {% endif %}
+                <div class="restaurant-details">
+                    <a class="nav-link" href="{% url 'menu_home' item.id %}">
+                        <div class="restaurant-name">{{ item.restaurantName }}</div>
+                    </a>
+                    <div class="restaurant-rating">⭐⭐⭐⭐⭐ (4.9)</div>
+                    <div class="restaurant-description">
+                        {{ item.address }}<br>
+                        {{ item.contact }}
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
             {% endif %}
         </div>
     </div>

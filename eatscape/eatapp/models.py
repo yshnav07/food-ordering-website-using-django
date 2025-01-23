@@ -30,11 +30,24 @@ class menu_new(models.Model):
     availability=models.TextField()
     image1= models.ImageField(upload_to='menu_images',null=True,blank=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_active= models.BooleanField(default=True)
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_active= models.BooleanField(default=True)
+
+class CartItems(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     menu_item = models.ForeignKey(menu_new, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+    is_active= models.BooleanField(default=True)
+
+class payment(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    paymentOption=models.TextField()
+    cardNumber=models.IntegerField()
+    cardholderName=models.TextField()
+
 
     def __str__(self):
         return self.user.username.__str__()

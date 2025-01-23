@@ -1,8 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 
-from .models import Userprofile,details_new,menu_new,Cart
+from .models import Userprofile,details_new,menu_new,Cart,CartItems,payment
 
 # Create your views here.
 def register (request):
@@ -112,11 +112,18 @@ def menu_details(request):
         return redirect('restaurent')
     return render (request,'menu_details.html')
 
-def menu_home(request,rest):
-    menu = menu_new.objects.filter(restaurant=rest)
-    return render (request,'menu_home.html',context={'menu_new':menu})
+def menu_home(request, rest):
+    # Filter restaurants matching the criteria
+    restaurants = details_new.objects.filter(id=rest)
+    
+    # Get all menu items for the filtered restaurants
+    menu = menu_new.objects.filter(restaurant__in=restaurants)
+    
+    return render(request, 'menu_home.html', context={'menu_new': menu})
 
-def update_rest(request,rest):
+   
+
+def update_rest(request):
     if request.method == 'POST':
         restaurantName = request.POST['restaurantName']
         address = request.POST['address']
@@ -124,7 +131,7 @@ def update_rest(request,rest):
         location = request.POST['location']
         latitude = request.POST['latitude']
         longitude = request.POST['longitude']
-        details=details_new.objects.get(id=rest)
+        details=details_new.objects.get(created_by=request.user)
         details.restaurantName = restaurantName
         details.address = address
         details.pincode = pincode
@@ -134,45 +141,102 @@ def update_rest(request,rest):
         details.save()
         return redirect('rest_home')
     else:
-        details = details_new.objects.get(id=rest)
+        details = details_new.objects.get(created_by=request.user)
         context={
             'details':details
         }
    
-    return render (request,'restaurant/update_rest.html',context)
+    return render (request,'restaurant/update_menu.html',context)
 
 def cart(request):
     
-    cart_items = Cart.objects.filter(user=request.user)
+    cart = Cart.objects.get(user=request.user,is_active=True)
+    cart_items = CartItems.objects.filter(cart=cart)
     total_price = sum(float(item.menu_item.price) * item.quantity for item in cart_items)
     
     return render(request, 'restaurant/cart.html', {
-        'menu_new': cart_items,
+        'cart_items': cart_items,
         'total_price': total_price,
     })
     
     
 
-def add_cart(request,menu):
+def add_cart(request, menu):
+    
     menu_item = menu_new.objects.get(id=menu)
-    cart_item, created = Cart.objects.get_or_create(
-        user=request.user,
-        menu_item=menu_item,
-        )
-    if not created:
-        cart_item.quantity += 1
+    cart, created = Cart.objects.get_or_create(user=request.user, is_active=True)
+    cart_item, item_created = CartItems.objects.get_or_create(cart=cart, menu_item=menu_item)
+    if not item_created:
+       
         cart_item.save()
+    else:
+        
+        cart_item.save()
+    
     return redirect('cart')
 
 
+
 def delete_cart(request,menu):
-    menu_item=Cart.objects.get(id=menu) 
-    menu_item.is_active=False
-    menu_item.save()
+    menu_item=CartItems.objects.get(menu_item=menu) 
+    menu_item.delete()
     return redirect('cart') 
 
-def payment(request):
-    return render(request,'payment/payment.html')
+def Payment(request):
+    if request.method == 'POST':
+        paymentOption= request.POST['paymentOption']
+        cardNumber=request.POST['cardNumber']
+        cardholderName=request.POST['cardholderName']
+        print(paymentOption,cardNumber,cardholderName)
+        pay=payment(user_id = request.user.id,paymentOption=paymentOption,cardNumber=cardNumber,cardholderName=cardholderName)
+        
+        pay.save()
+        return redirect('payment_succes')
+    else:
+        return render(request,'payment/payment.html')
 
 def payment_succes(request):
     return render(request,'payment/payment_succes.html')
+
+
+
+def deletemenupage(request):
+     delete = menu_new.objects.filter(created_by=request.user)
+     
+    
+     return render(request, 'menudelete.html', {
+          'menu_new': delete })
+     
+def delete_menu(request,menu):
+    menu_item1=menu_new.objects.get(id=menu) 
+    menu_item1.delete()
+    return redirect('deletemenupage') 
+
+def about_us(request):
+    return render(request,'aboutus.html')
+
+
+
+
+def update_login(request): 
+    if request.method == 'POST':
+        user = request.user
+        new_username = request.POST.get('username')
+        new_password = request.POST.get('password')
+
+        if new_username:
+            user.username = new_username
+        if new_password:
+            user.set_password(new_password)  
+
+        user.save()
+        return redirect('login')
+
+    else:
+       
+        user = request.user
+        context = {
+            'authenticated_user': user,
+        }
+
+    return render(request, 'update_login.html', context)

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Eatscape</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Header Section */
+        header {
+            background: url('https://wallpapers.com/images/hd/food-4k-raqfvgc6v1noenfm.jpg') no-repeat center center/cover;
+            color: #fff;
+            padding: 60px 10%;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+            text-shadow: 2px 2px 5px #000;
+        }
+        header p {
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 3px #000;
+        }
+
+        /* About Us Section */
+        section {
+            padding: 40px 10%;
+        }
+        section h2 {
+            color: #ff7f50;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: slideInFromLeft 1.5s ease-out;
+        }
+        section p {
+            font-size: 1.2rem;
+            color: #333;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        /* Team Section */
+        .team {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+            margin-top: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .team-member {
+            text-align: center;
+            width: 200px;
+            animation: bounceIn 1.5s ease-in-out;
+        }
+        .team-member img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border: 4px solid #ff7f50;
+            transition: transform 0.3s ease;
+        }
+        .team-member img:hover {
+            transform: scale(1.1);
+        }
+        .team-member h3 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        /* Footer Section */
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Eatscape</h1>
+        <p>Your gateway to unforgettable culinary journeys</p>
+    </header>
+
+    <section>
+        <h2>About Us</h2>
+        <p>Welcome to Eatscape, your ultimate destination for culinary exploration and gastronomic adventures. At Eatscape, we are more than just a platform—we are a community of food lovers, explorers, and storytellers who believe that every meal has a story to tell and every dish is a doorway to a new culture.</p>
+        
+        <p>Our mission is simple yet profound: to connect people with the world through the universal language of food. Whether it's uncovering the hidden gems of a bustling city, savoring authentic dishes in quaint local eateries, or indulging in fine dining experiences at world-renowned restaurants, Eatscape is here to guide you on a journey filled with flavor, culture, and discovery.</p>
+        
+        <p>We understand that food is more than just nourishment—it’s a way to celebrate diversity, share traditions, and create unforgettable memories. From our curated lists of must-visit dining spots to insider tips on food festivals, street food markets, and unique dining concepts, we ensure that every Eatscape experience is tailored to ignite your passion for exploration.</p>
+        
+        <p>Whether you’re a casual foodie looking for your next meal or a seasoned traveler searching for authentic dining adventures, Eatscape provides the inspiration and resources to make every meal an experience to remember. Join us as we celebrate the art of dining, one plate at a time.</p>
+    </section>
+    
+
+    <section>
+        <h2>Meet Our Team</h2>
+        <div class="team">
+            <div class="team-member">
+                <img src="https://i.pinimg.com/originals/f8/46/b2/f846b2d9d5d491fa7d0728c73fb020d5.jpg" alt="Vaishnav CR">
+                <h3>Vaishnav CR</h3>
+            </div>
+            <div class="team-member">
+                <img src="https://images.wallpapersden.com/image/download/anime-naruto-hd-2023-ai_bW5mbGmUmZqaraWkpJRma21lrWZlamU.jpg" alt="Athulkrishna TS">
+                <h3>Athulkrishna TS</h3>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Eatscape. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -81,18 +81,20 @@
             <div class="col-md-3">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
-                        <h5 class="card-title">Manage Menu</h5>
-                        <p class="card-text">Add, edit, or remove items from your restaurant's menu.</p>
-                        <a href="{% url 'menu_details' %}" class="btn btn-primary">Go to Menu</a>
+                        <h5 class="card-title">Add Menu</h5>
+                        <p class="card-text">Add items from your restaurant's menu.</p>
+                        <a href="{% url 'menu_details' %}" class="btn btn-primary">Add Menu</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
-                        <h5 class="card-title">View Orders</h5>
-                        <p class="card-text">Check and manage incoming customer orders.</p>
-                        <a href="#" class="btn btn-primary">View Orders</a>
+                        <h5 class="card-title">View Menu</h5>
+                        <p class="card-text">To checking added menu. of your restaurant</p>
+            
+                        <a href="/deletemenupage" class="btn btn-primary">View Menu</a>
+              
                     </div>
                 </div>
             </div>
@@ -102,9 +104,9 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">Profile Settings</h5>
                         <p class="card-text">Update your account and restaurant details.</p>
-                        {% for rest in details %}
-                        <a href="{% url 'update_rest' rest.id %}" class="btn btn-primary">Update Profile</a>
-                        {% endfor %}
+                
+                        <a href="{% url 'update_rest' %}" class="btn btn-primary">Update Restaurant</a>
+     
                     </div>
                 </div>
             </div>
